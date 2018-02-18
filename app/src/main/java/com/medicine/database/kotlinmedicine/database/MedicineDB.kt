@@ -1,6 +1,7 @@
 package com.medicine.database.kotlinmedicine.database
 
 import android.content.ContentValues
+import android.database.Cursor
 import com.medicine.database.kotlinmedicine.MedicineParser
 import com.medicine.database.kotlinmedicine.models.Illness
 import com.medicine.database.kotlinmedicine.models.Patient
@@ -82,5 +83,13 @@ class MedicineDB(private val patientsDB: DBHelper = DBHelper.instance()) {
                     IllnessTable.ILLNESS_NAME to TEXT,
                     IllnessTable.ILLNESS_AGE to TEXT)
         }
+    }
+
+    fun dynamicPatientsSelection(surname: String): List<Patient>{
+        var list: List<Patient> = listOf()
+        patientsDB.use {
+            list = MedicineParser().parseAllPatients(select(PatientTable.NAME).whereArgs(PatientTable.PATIENT_SURNAME + " LIKE '" + surname + "%'"))
+        }
+        return list
     }
 }
