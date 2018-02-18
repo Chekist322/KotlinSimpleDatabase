@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">KotlinMedicine</string>
+    <string name="tab_text_1">Поиск</string>
+    <string name="tab_text_2">Список</string>
+    <string name="tab_text_3">Добавить</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="clear_tables">clear tables</string>
+    <string name="add">Добавить</string>
+    <string name="fathers_name">Отчество</string>
+    <string name="surname">Фамилия</string>
+    <string name="name">Имя</string>
+    <string name="age">Возраст</string>
+    <string name="list_is_empty">Список пуст</string>
+    <string name="new_patient">Новый Пациент</string>
+    <string name="new_illness">Новая Запись</string>
+</resources>

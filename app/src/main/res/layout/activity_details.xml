@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/frameLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="70dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorAccentDark">
+
+            <TextView
+                android:id="@+id/surname_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@+id/frameLayout3"
+                android:fadeScrollbars="true"
+                android:isScrollContainer="true"
+                android:text="@string/surname"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/name_view"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@+id/surname_view"
+                android:fadeScrollbars="true"
+                android:isScrollContainer="true"
+                android:text="@string/name"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/fathers_name_view"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/surname_view"
+                android:layout_below="@+id/surname_view"
+                android:fadeScrollbars="true"
+                android:isScrollContainer="true"
+                android:text="@string/fathers_name"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/age_view"
+                android:layout_alignBottom="@+id/age_view"
+                android:layout_toStartOf="@+id/age_view"
+                android:background="@drawable/age_round_corner"
+                android:paddingBottom="5dp"
+                android:paddingStart="8dp"
+                android:paddingTop="5dp"
+                android:text="@string/age"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/age_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:background="@android:color/black"
+                android:paddingBottom="5dp"
+                android:paddingEnd="10dp"
+                android:paddingStart="4dp"
+                android:paddingTop="5dp"
+                android:text="@string/age"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp" />
+
+            <FrameLayout
+                android:id="@+id/frameLayout3"
+                android:layout_width="65dp"
+                android:layout_height="match_parent"
+                android:background="@color/cardview_shadow_start_color">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageButton
+                        android:id="@+id/home_back_arrow"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:background="?attr/homeAsUpIndicator"
+                        android:baselineAlignBottom="true" />
+                </RelativeLayout>
+
+            </FrameLayout>
+
+        </RelativeLayout>
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:translationZ="3dp">
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/floatingActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
+            android:layout_marginEnd="40dp"
+            android:clickable="true"
+            android:focusable="true"
+            app:backgroundTint="@color/colorAccent"
+            app:srcCompat="@drawable/plus" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/details_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/frameLayout2"
+        android:translationZ="1dp">
+
+    </FrameLayout>
+
+</RelativeLayout>

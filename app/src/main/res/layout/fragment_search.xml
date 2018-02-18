@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="20dp">
+
+        <EditText
+            android:id="@+id/date_pick_view"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/fathers_name_edit_text"
+            android:layout_below="@+id/adding_title"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/edit_text"
+            android:elevation="5dp"
+            android:ems="10"
+            android:hint="@string/name"
+            android:inputType="textCapWords|textPersonName"
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/illness_edit_text"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/date_pick_view"
+            android:layout_below="@+id/date_pick_view"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/edit_text"
+            android:elevation="5dp"
+            android:ems="10"
+            android:hint="@string/surname"
+            android:inputType="textCapWords|textPersonName"
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/fathers_name_edit_text"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/illness_edit_text"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/edit_text"
+            android:elevation="5dp"
+            android:ems="10"
+            android:hint="@string/fathers_name"
+            android:inputType="textCapWords|textPersonName"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/add_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/age_edit_text"
+            android:layout_below="@+id/age_edit_text"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/round_red_button"
+            android:elevation="5dp"
+            android:padding="15dp"
+            android:text="Применить Фильтр"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/adding_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="29dp"
+            android:text="Поиск"
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/age_edit_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fathers_name_edit_text"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="26dp"
+            android:background="@drawable/edit_text"
+            android:ems="10"
+            android:hint="@string/age"
+            android:inputType="numberDecimal"
+            android:textAlignment="center" />
+
+    </RelativeLayout>
+</RelativeLayout>
