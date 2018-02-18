@@ -9,7 +9,6 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.medicine.database.kotlinmedicine.PATIENT_ID
 import com.medicine.database.kotlinmedicine.R
 import com.medicine.database.kotlinmedicine.activities.DetailsActivity
 import com.medicine.database.kotlinmedicine.activities.MainActivity
@@ -17,7 +16,6 @@ import com.medicine.database.kotlinmedicine.models.Illness
 import kotlinx.android.synthetic.main.activity_details.*
 import kotlinx.android.synthetic.main.fragment_add_illness.*
 import java.util.*
-import javax.xml.datatype.DatatypeConstants.MONTHS
 
 
 /**
@@ -98,9 +96,15 @@ class AddIllnessFragment : Fragment(), View.OnClickListener {
         }
     }
 
+    override fun onDestroyView() {
+        DetailsActivity.change = false
+        super.onDestroyView()
+    }
+
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.back_button -> {
+                DetailsActivity.change = false
                 activity.onBackPressed()
             }
             R.id.date_edit_text -> {
