@@ -10,6 +10,18 @@
         android:layout_height="match_parent"
         android:paddingBottom="20dp">
 
+        <TextView
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:id="@+id/adding_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="29dp"
+            android:text="@string/new_patient"
+            android:textSize="24sp" />
+
         <Button
             android:id="@+id/clear_tables_button"
             android:layout_width="wrap_content"
@@ -21,7 +33,7 @@
             android:text="@string/clear_tables" />
 
         <EditText
-            android:id="@+id/date_pick_view"
+            android:id="@+id/name_edit_text"
             android:layout_width="280dp"
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/fathers_name_edit_text"
@@ -35,11 +47,11 @@
             android:textSize="24sp" />
 
         <EditText
-            android:id="@+id/illness_edit_text"
+            android:id="@+id/surname_edit_text"
             android:layout_width="280dp"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/date_pick_view"
-            android:layout_below="@+id/date_pick_view"
+            android:layout_alignStart="@+id/name_edit_text"
+            android:layout_below="@+id/name_edit_text"
             android:layout_marginTop="25dp"
             android:background="@drawable/edit_text"
             android:elevation="5dp"
@@ -52,7 +64,7 @@
             android:id="@+id/fathers_name_edit_text"
             android:layout_width="280dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/illness_edit_text"
+            android:layout_below="@+id/surname_edit_text"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="25dp"
             android:background="@drawable/edit_text"
@@ -75,16 +87,6 @@
             android:text="@string/add"
             android:textColor="@android:color/white"
             android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/adding_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="29dp"
-            android:text="@string/new_patient"
-            android:textSize="24sp" />
 
         <EditText
             android:id="@+id/age_edit_text"

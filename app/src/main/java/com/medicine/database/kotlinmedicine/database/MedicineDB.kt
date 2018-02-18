@@ -1,5 +1,6 @@
 package com.medicine.database.kotlinmedicine.database
 
+import android.content.ContentValues
 import com.medicine.database.kotlinmedicine.MedicineParser
 import com.medicine.database.kotlinmedicine.models.Illness
 import com.medicine.database.kotlinmedicine.models.Patient
@@ -12,7 +13,7 @@ class MedicineDB(private val patientsDB: DBHelper = DBHelper.instance()) {
 
     fun insertPatient(patient: Patient) {
         patientsDB.use {
-            val ID = insert(PatientTable.NAME,
+            insert(PatientTable.NAME,
                     PatientTable.PATIENT_NAME to patient.name,
                     PatientTable.PATIENT_SURNAME to patient.surname,
                     PatientTable.PATIENT_FATHERS_NAME to patient.fathers_name,
@@ -20,29 +21,48 @@ class MedicineDB(private val patientsDB: DBHelper = DBHelper.instance()) {
         }
     }
 
-    fun insertIllness(illness: Illness, patientID: Long) {
+    fun insertIllness(illness: Illness) {
         patientsDB.use {
             insert(IllnessTable.NAME,
+                    IllnessTable.PATIENT_ID to illness.patientID,
                     IllnessTable.ILLNESS_NAME to illness.illnessName,
-                    IllnessTable.ILLNESS_AGE to illness.illnessAge,
-                    IllnessTable.PATIENT_ID to patientID)
+                    IllnessTable.ILLNESS_AGE to illness.illnessStartDate)
         }
     }
 
-    fun selectAllPatients(): List<Patient>? {
-        var list: List<Patient>? = null
+    fun selectAllPatients(): List<Patient> {
+        var list: List<Patient> = listOf()
         patientsDB.use {
             list = MedicineParser().parseAllPatients(select(PatientTable.NAME))
         }
         return list
     }
 
-    fun selectDetailOnePatient(whereId: Long): Patient? {
+    fun selectAllIllnessForPatientId(whereId: Long?): List<Illness> {
+        var list: List<Illness> = listOf()
+        patientsDB.use {
+            list = MedicineParser().parseAllIllnesses(select(IllnessTable.NAME).whereArgs("patient_id = " + whereId))
+        }
+        return list
+    }
+
+    fun selectDetailOnePatient(whereId: Long?): Patient? {
         var patient: Patient? = null
         patientsDB.use {
             patient = MedicineParser().parseSinglePatient(select(PatientTable.NAME).whereArgs("_id = " + whereId))
         }
         return patient
+    }
+
+    fun updateIllness(illness: Illness) {
+        patientsDB.use {
+            update(IllnessTable.NAME,
+                    IllnessTable._ID to illness.id,
+                    IllnessTable.PATIENT_ID to illness.patientID,
+                    IllnessTable.ILLNESS_NAME to illness.illnessName,
+                    IllnessTable.ILLNESS_AGE to illness.illnessStartDate)
+                    .whereArgs("_id = " + illness.id).exec()
+        }
     }
 
     fun dropAllTables() {
@@ -60,7 +80,7 @@ class MedicineDB(private val patientsDB: DBHelper = DBHelper.instance()) {
                     IllnessTable._ID to INTEGER + PRIMARY_KEY + AUTOINCREMENT,
                     IllnessTable.PATIENT_ID to INTEGER,
                     IllnessTable.ILLNESS_NAME to TEXT,
-                    IllnessTable.ILLNESS_AGE to INTEGER)
+                    IllnessTable.ILLNESS_AGE to TEXT)
         }
     }
 }

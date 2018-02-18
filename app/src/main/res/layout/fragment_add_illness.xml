@@ -12,7 +12,7 @@
             android:paddingBottom="20dp">
 
             <EditText
-                android:id="@+id/date_pick_view"
+                android:id="@+id/date_edit_text"
                 android:layout_width="280dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/adding_title"
@@ -22,22 +22,22 @@
                 android:elevation="5dp"
                 android:ems="10"
                 android:focusable="false"
-                android:hint="Дата диагностирования"
+                android:hint="@string/diag_date"
                 android:inputType="date"
                 android:textAlignment="center"
                 android:textSize="18sp" />
 
         <EditText
-            android:id="@+id/illness_edit_text"
+            android:id="@+id/illness_name_edit_text"
             android:layout_width="280dp"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/date_pick_view"
-            android:layout_below="@+id/date_pick_view"
+            android:layout_alignStart="@+id/date_edit_text"
+            android:layout_below="@+id/date_edit_text"
             android:layout_marginTop="35dp"
             android:background="@drawable/edit_text"
             android:elevation="5dp"
             android:ems="10"
-            android:hint="Наименование"
+            android:hint="@string/illness_name"
             android:inputType="textCapWords|textPersonName"
             android:textSize="24sp" />
 
@@ -52,17 +52,17 @@
                 android:textSize="24sp" />
 
         <Button
-            android:id="@+id/add_button"
+            android:id="@+id/back_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/illness_edit_text"
+            android:layout_below="@+id/illness_name_edit_text"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="40dp"
-            android:background="@drawable/round_red_button"
+            android:background="@drawable/round_white_button"
             android:elevation="5dp"
             android:padding="15dp"
-            android:text="@string/add"
-            android:textColor="@android:color/white"
+            android:text="отменить"
+            android:textColor="@color/black"
             android:textSize="18sp" />
 
         </RelativeLayout>

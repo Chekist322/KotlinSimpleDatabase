@@ -20,4 +20,8 @@ class MedicineParser {
     fun parseSinglePatient(builder: SelectQueryBuilder): Patient {
         return builder.parseSingle(rowPatientParser)
     }
+
+    fun parseAllIllnesses(builder: SelectQueryBuilder): List<Illness> {
+        return builder.parseList(rowIllnessParser)
+    }
 }

@@ -15,4 +15,10 @@
     <string name="list_is_empty">Список пуст</string>
     <string name="new_patient">Новый Пациент</string>
     <string name="new_illness">Новая Запись</string>
+    <string name="diag_date">Дата диагностирования</string>
+    <string name="illness_name">Наименование</string>
+    <string name="illness_start_date">Дата диагностирования:</string>
+    <string name="illness_name_dd">Наименование:</string>
+    <string name="FIO">ФИО:</string>
+    <string name="age_dd">Возраст:</string>
 </resources>

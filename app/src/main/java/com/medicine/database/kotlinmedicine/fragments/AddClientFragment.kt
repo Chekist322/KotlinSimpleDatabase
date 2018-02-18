@@ -13,7 +13,6 @@ import com.medicine.database.kotlinmedicine.activities.MainActivity
 import com.medicine.database.kotlinmedicine.models.Patient
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_add_client.*
-import org.jetbrains.anko.toast
 
 /**
  * Created by tosya on 16.02.18.
@@ -34,19 +33,21 @@ class AddClientFragment : Fragment() {
             tab?.select()
         }
 
+
+
         add_button.setOnClickListener{
             var valid = true
 
-            val name = date_pick_view.text.toString()
+            val name = name_edit_text.text.toString()
             if (TextUtils.isEmpty(name)) {
                 valid = false
-                date_pick_view.error = "Введите имя!"
+                name_edit_text.error = "Введите имя!"
             }
 
-            val surname = illness_edit_text.text.toString()
+            val surname = surname_edit_text.text.toString()
             if (TextUtils.isEmpty(surname)) {
                 valid = false
-                illness_edit_text.error = "Введите фамилию.!"
+                surname_edit_text.error = "Введите фамилию.!"
             }
 
             val fathersName = fathers_name_edit_text.text.toString()
@@ -62,6 +63,10 @@ class AddClientFragment : Fragment() {
             }
 
             if (valid) {
+                name_edit_text.text.clear()
+                surname_edit_text.text.clear()
+                fathers_name_edit_text.text.clear()
+                age_edit_text.text.clear()
                 val patient = Patient(0, name, surname, fathersName, age.toLong())
                 MainActivity.mMedicineDB.insertPatient(patient)
                 val tab = activity.tabs.getTabAt(1)
@@ -72,5 +77,9 @@ class AddClientFragment : Fragment() {
             }
         }
         super.onActivityCreated(savedInstanceState)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+
     }
 }

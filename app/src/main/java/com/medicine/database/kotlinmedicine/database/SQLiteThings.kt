@@ -48,7 +48,7 @@ class DBHelper : ManagedSQLiteOpenHelper(App.instance, DB_NAME, null, DB_VERSION
                 IllnessTable._ID to INTEGER + PRIMARY_KEY + AUTOINCREMENT,
                 IllnessTable.PATIENT_ID to INTEGER,
                 IllnessTable.ILLNESS_NAME to TEXT,
-                IllnessTable.ILLNESS_AGE to INTEGER)
+                IllnessTable.ILLNESS_AGE to TEXT)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {

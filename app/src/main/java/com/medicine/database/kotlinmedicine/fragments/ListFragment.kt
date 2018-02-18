@@ -12,7 +12,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SimpleAdapter
+import android.widget.TextView
 import com.medicine.database.kotlinmedicine.*
 import com.medicine.database.kotlinmedicine.activities.DetailsActivity
 import com.medicine.database.kotlinmedicine.activities.MainActivity
@@ -27,20 +27,25 @@ import org.jetbrains.anko.uiThread
  */
 class ListFragment : Fragment() {
 
+    companion object {
+        private var mPatientsList: List<Patient> = listOf()
+        var adapter = RecyclerViewAdapter(mPatientsList)
+    }
+
     private val broadCastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             when (intent?.extras?.getString(LOCAL_RECEIVER_EXTRAS_COMMANDS)) {
-                UPDATE_LIST_ADD ->  doAsync {
+                UPDATE_LIST_ADD -> doAsync {
                     Thread.sleep(500)
                     uiThread {
-                        activity.toast("Запись успешно добавлена!")
+                        context?.toast("Запись успешно добавлена!")
                         initList()
                     }
                 }
                 UPDATE_LIST_CLEAR -> doAsync {
                     Thread.sleep(500)
                     uiThread {
-                        activity.toast("База очищена...")
+                        context?.toast("База очищена...")
                         initList()
                     }
                 }
@@ -48,75 +53,78 @@ class ListFragment : Fragment() {
         }
     }
 
-
-    private var mPatientsList: List<Patient>? = null
-    private lateinit var linearLayoutManager: LinearLayoutManager
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        mPatientsList = MainActivity.mMedicineDB.selectAllPatients()
-        linearLayoutManager = LinearLayoutManager(activity.applicationContext)
         return inflater.inflate(R.layout.fragment_list, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         LocalBroadcastManager.getInstance(activity)
                 .registerReceiver(broadCastReceiver, IntentFilter(LOCAL_RECEIVER))
-
+        recycler_view.layoutManager = LinearLayoutManager(activity)
+        recycler_view.adapter = adapter
         initList()
         super.onActivityCreated(savedInstanceState)
     }
 
 
     fun initList() {
-        mPatientsList = MainActivity.mMedicineDB.selectAllPatients()
-        var arrayList: ArrayList<HashMap<String, String>> = arrayListOf()
-        mPatientsList?.forEach {
-            var newMap: HashMap<String, String> = hashMapOf()
-            newMap["Name"] = it.name + " " + it.surname + " " + it.fathers_name
-
-            newMap["Age"] = it.age.toString()
-            arrayList.add(arrayList.size, newMap)
+        doAsync {
+            mPatientsList = MainActivity.mMedicineDB.selectAllPatients()
+            uiThread {
+                adapter.updateList(mPatientsList)
+            }
         }
-
-        val listView = list_view
-        listView?.adapter = SimpleAdapter(activity, arrayList,
-                android.R.layout.simple_list_item_2, arrayOf("Name","Age"),
-                intArrayOf(android.R.id.text1, android.R.id.text2))
-
-//        listView.setOnItemClickListener { parent, view, position, id ->
-//            val intent = Intent(activity, DetailsActivity::class.java)
-//            intent.putExtra(PATIENT_ID, id+1)
-//            startActivity(intent)
-//        }
     }
 
 
-    class ReciclerViewAdapter: RecyclerView.Adapter<ReciclerViewAdapter.ViewHolder>() {
+    class RecyclerViewAdapter(private var list: List<Patient>) : RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
 
-        private var patientsList: List<Patient>? = null
+        init {
+            setHasStableIds(true)
+        }
 
-        class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
-            lateinit var name: String
-            lateinit var age: String
+        class ViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
 
+            override fun onClick(v: View?) {
+                    val intent = Intent(v?.context, DetailsActivity::class.java)
+                    intent.putExtra(PATIENT_ID, itemId+1)
+                    v?.context?.startActivity(intent)
+            }
 
+            var name: TextView? = null
+            var age: TextView? = null
+            var id: Long? = null
+
+            init {
+                view.setOnClickListener(this)
+                this.name = view.findViewById(R.id.patient_name_card_view)
+                this.age = view.findViewById(R.id.patient_date_card_view)
+            }
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-            var root = LayoutInflater.from(parent.context).inflate(android.R.layout.simple_list_item_2, parent, false)
+            val root = LayoutInflater.from(parent.context).inflate(R.layout.patient_card, parent, false)
             return ViewHolder(root)
         }
 
         override fun getItemCount(): Int {
+            return list?.size
+        }
 
+        override fun getItemId(position: Int): Long {
+            return position.toLong()
         }
 
         override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
-
+            val patient = list?.get(position)
+            val fullName = patient?.surname + " " + patient?.name + " " + patient?.fathers_name
+            holder?.name?.text = fullName
+            holder?.age?.text = patient?.age.toString()
+            holder?.id = position.toLong()
         }
 
         fun updateList(aPatientList: List<Patient>) {
-            patientsList = aPatientList
+            list = aPatientList
             notifyDataSetChanged()
         }
     }

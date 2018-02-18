@@ -26,13 +26,15 @@
                 android:layout_toEndOf="@+id/frameLayout3"
                 android:fadeScrollbars="true"
                 android:isScrollContainer="true"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
                 android:text="@string/surname"
                 android:textColor="@color/colorPrimary"
                 android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/name_view"
-                android:layout_width="150dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="10dp"
@@ -40,6 +42,8 @@
                 android:layout_toEndOf="@+id/surname_view"
                 android:fadeScrollbars="true"
                 android:isScrollContainer="true"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
                 android:text="@string/name"
                 android:textColor="@color/colorPrimary"
                 android:textSize="18sp" />
@@ -52,6 +56,8 @@
                 android:layout_below="@+id/surname_view"
                 android:fadeScrollbars="true"
                 android:isScrollContainer="true"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
                 android:text="@string/fathers_name"
                 android:textColor="@color/colorPrimary"
                 android:textSize="18sp" />

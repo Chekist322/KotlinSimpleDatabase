@@ -29,14 +29,8 @@ class MainActivity : AppCompatActivity() {
         container.adapter = mSectionsPagerAdapter
         container.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabs))
         tabs.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(container))
-
-        var patient = Patient(0,"vasya", "kek", "123", 12)
-
-        mMedicineDB.insertPatient(patient)
-        patient.id++
-        mMedicineDB.insertPatient(patient)
-        patient.id++
-        mMedicineDB.insertPatient(patient)
+        val tab = tabs.getTabAt(1)
+        tab?.select()
     }
 
     inner class SectionsPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
