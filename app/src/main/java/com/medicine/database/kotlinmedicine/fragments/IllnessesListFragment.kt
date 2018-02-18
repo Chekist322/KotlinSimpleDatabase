@@ -10,8 +10,11 @@ import android.support.v4.app.Fragment
 import android.support.v4.content.LocalBroadcastManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.TextView
 import com.medicine.database.kotlinmedicine.*
@@ -27,17 +30,17 @@ import org.jetbrains.anko.uiThread
 /**
  * Created by tosya on 17.02.18.
  */
-class IllnessesListFragment: Fragment() {
+class IllnessesListFragment : Fragment() {
 
     override fun onSaveInstanceState(outState: Bundle?) {
 
     }
 
     companion object {
-        private var mIllnessesList: List<Illness> = listOf()
+        private var mIllnessesList: MutableList<Illness> = mutableListOf()
         var adapter = RecyclerCardViewAdapter(mIllnessesList)
 
-        fun newInstance() : IllnessesListFragment {
+        fun newInstance(): IllnessesListFragment {
             return IllnessesListFragment()
         }
     }
@@ -64,9 +67,9 @@ class IllnessesListFragment: Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         activity.floatingActionButton.setOnClickListener {
             activity.supportFragmentManager.beginTransaction()
-                        .replace(R.id.details_container, AddIllnessFragment.newInstance())
-                        .addToBackStack(activity.title as String?)
-                        .commit()
+                    .replace(R.id.details_container, AddIllnessFragment.newInstance())
+                    .addToBackStack(activity.title as String?)
+                    .commit()
         }
 
         var plusToCross: AnimatedVectorDrawable = activity.resources.getDrawable(R.drawable.avd_plus_to_cross) as AnimatedVectorDrawable
@@ -78,6 +81,22 @@ class IllnessesListFragment: Fragment() {
                 .registerReceiver(broadCastReceiver, IntentFilter(LOCAL_RECEIVER_ILLNESSES))
         illnesses_recycler_view.layoutManager = LinearLayoutManager(activity)
         illnesses_recycler_view.adapter = IllnessesListFragment.adapter
+
+        val swipeHandler = object : SwipeToDeleteCallback(activity) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                doAsync {
+                    MainActivity.mMedicineDB.deleteIllnessByID(mIllnessesList.get(viewHolder.adapterPosition).id)
+                    uiThread {
+                        adapter.clearList()
+                        illnesses_recycler_view.swapAdapter(IllnessesListFragment.adapter, true)
+                        initList()
+                    }
+                }
+            }
+        }
+        val itemTouchHelper = ItemTouchHelper(swipeHandler)
+        itemTouchHelper.attachToRecyclerView(illnesses_recycler_view)
+
         initList()
         super.onActivityCreated(savedInstanceState)
     }
@@ -86,18 +105,23 @@ class IllnessesListFragment: Fragment() {
         doAsync {
             IllnessesListFragment.mIllnessesList = MainActivity.mMedicineDB.selectAllIllnessForPatientId(DetailsActivity.patientID)
             uiThread {
-                IllnessesListFragment.adapter.updateList(IllnessesListFragment.mIllnessesList)
+                if (mIllnessesList.isEmpty()) {
+                    empty_view.visibility = VISIBLE
+                } else {
+                    empty_view.visibility = GONE
+                }
+                IllnessesListFragment.adapter.updateList(IllnessesListFragment.mIllnessesList as MutableList<Illness>)
             }
         }
     }
 
-    class RecyclerCardViewAdapter(private var list: List<Illness>) : RecyclerView.Adapter<RecyclerCardViewAdapter.CardViewHolder>() {
+    class RecyclerCardViewAdapter(private var list: MutableList<Illness>) : RecyclerView.Adapter<RecyclerCardViewAdapter.CardViewHolder>() {
 
         init {
             setHasStableIds(true)
         }
 
-        class CardViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener{
+        class CardViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
 
             override fun onClick(v: View?) {
                 DetailsActivity.change = true
@@ -135,9 +159,13 @@ class IllnessesListFragment: Fragment() {
             holder?.date?.text = illness.illnessStartDate
         }
 
-        fun updateList(aIllnessList: List<Illness>) {
+        fun updateList(aIllnessList: MutableList<Illness>) {
             list = aIllnessList
             this.notifyDataSetChanged()
+        }
+
+        fun clearList() {
+            list.clear()
         }
     }
 }

@@ -5,6 +5,7 @@ import android.graphics.drawable.AnimatedVectorDrawable
 import android.icu.util.Calendar
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,7 +35,30 @@ class AddIllnessFragment : Fragment(), View.OnClickListener {
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
+
+        val calendar = Calendar.getInstance(Locale.ENGLISH)
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        var dayStr = day.toString()
+        if (day < 10) {
+            dayStr = "0" + day.toString()
+        }
+        val monthStr = Months.values()[month]
+
+        val yearStr = year.toString()
+        val date = "$dayStr $monthStr $yearStr года"
+        date_edit_text.setText(date)
+
+
         activity.floatingActionButton.setOnClickListener {
+            var validated = true
+            if (TextUtils.isEmpty(date_edit_text.text.toString())){
+                illness_name_edit_text.error = "Введите Наименование!"
+                validated = false
+            }
+            if (validated)
             if (!DetailsActivity.change) {
                 val illness = Illness(0, DetailsActivity.patientID, illness_name_edit_text.text.toString(), date_edit_text.text.toString())
                 MainActivity.mMedicineDB.insertIllness(illness)
@@ -84,7 +108,6 @@ class AddIllnessFragment : Fragment(), View.OnClickListener {
                 val year = calendar.get(Calendar.YEAR)
                 val month = calendar.get(Calendar.MONTH)
                 val day = calendar.get(Calendar.DAY_OF_MONTH)
-
 
                 val dpd = DatePickerDialog(activity, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
                     var dayStr = dayOfMonth.toString()

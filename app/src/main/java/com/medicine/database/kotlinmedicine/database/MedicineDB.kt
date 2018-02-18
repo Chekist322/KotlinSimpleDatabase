@@ -31,20 +31,20 @@ class MedicineDB(private val patientsDB: DBHelper = DBHelper.instance()) {
         }
     }
 
-    fun selectAllPatients(): List<Patient> {
+    fun selectAllPatients(): MutableList<Patient> {
         var list: List<Patient> = listOf()
         patientsDB.use {
             list = MedicineParser().parseAllPatients(select(PatientTable.NAME))
         }
-        return list
+        return list.toMutableList()
     }
 
-    fun selectAllIllnessForPatientId(whereId: Long?): List<Illness> {
+    fun selectAllIllnessForPatientId(whereId: Long?): MutableList<Illness> {
         var list: List<Illness> = listOf()
         patientsDB.use {
             list = MedicineParser().parseAllIllnesses(select(IllnessTable.NAME).whereArgs("patient_id = " + whereId))
         }
-        return list
+        return list.toMutableList()
     }
 
     fun selectDetailOnePatient(whereId: Long?): Patient? {
@@ -85,11 +85,23 @@ class MedicineDB(private val patientsDB: DBHelper = DBHelper.instance()) {
         }
     }
 
-    fun dynamicPatientsSelection(surname: String): List<Patient>{
+    fun dynamicPatientsSelection(surname: String): MutableList<Patient>{
         var list: List<Patient> = listOf()
         patientsDB.use {
             list = MedicineParser().parseAllPatients(select(PatientTable.NAME).whereArgs(PatientTable.PATIENT_SURNAME + " LIKE '" + surname + "%'"))
         }
-        return list
+        return list.toMutableList()
+    }
+
+    fun deletePatientByID(id: Long?) {
+        patientsDB.use {
+            delete(PatientTable.NAME, PatientTable._ID + " = " + id, null)
+        }
+    }
+
+    fun deleteIllnessByID(id: Long?) {
+        patientsDB.use {
+            delete(IllnessTable.NAME, IllnessTable._ID + " = " + id, null)
+        }
     }
 }

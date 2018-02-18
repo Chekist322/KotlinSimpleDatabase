@@ -22,16 +22,6 @@
             android:text="@string/new_patient"
             android:textSize="24sp" />
 
-        <Button
-            android:id="@+id/clear_tables_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/add_button"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="50dp"
-            android:elevation="1dp"
-            android:text="@string/clear_tables" />
-
         <EditText
             android:id="@+id/name_edit_text"
             android:layout_width="280dp"
@@ -78,9 +68,9 @@
             android:id="@+id/add_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/clear_tables_button"
             android:layout_below="@+id/age_edit_text"
-            android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
             android:background="@drawable/round_red_button"
             android:elevation="5dp"
             android:padding="15dp"

@@ -26,7 +26,7 @@ import org.jetbrains.anko.uiThread
 class SearchFragment : Fragment() {
 
     companion object {
-        private var mPatientsList: List<Patient> = listOf()
+        private var mPatientsList: MutableList<Patient> = mutableListOf()
         var adapter = RecyclerViewAdapter(mPatientsList)
     }
 

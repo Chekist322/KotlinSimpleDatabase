@@ -1,5 +1,7 @@
 package com.medicine.database.kotlinmedicine.fragments
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.support.v4.app.Fragment
 import android.os.Bundle
@@ -24,16 +26,33 @@ class AddClientFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
 
-        clear_tables_button.setOnClickListener {
+        adding_title.setOnLongClickListener(object : View.OnLongClickListener {
+            override fun onLongClick(v: View?): Boolean {
+                AlertDialog.Builder(activity)
+                        .setMessage("Вы уверевны, что хотите УДАЛИТЬ базу данных?")
+                        .setPositiveButton("Да") { dialog, which ->
+                            MainActivity.mMedicineDB.dropAllTables()
+                            LocalBroadcastManager.getInstance(activity)
+                                    .sendBroadcast(Intent(LOCAL_RECEIVER)
+                                            .putExtra(LOCAL_RECEIVER_EXTRAS_COMMANDS, UPDATE_LIST_CLEAR))
+                            val tab = activity.tabs.getTabAt(1)
+                            tab?.select()
+                        }
+                        .setNegativeButton("Нет") { dialog, which ->
+                            dialog.cancel()
+                        }
+                        .show()
+             return true
+            }
+        })
+        activity.tabItem3?.setOnClickListener {
             MainActivity.mMedicineDB.dropAllTables()
             LocalBroadcastManager.getInstance(activity)
                     .sendBroadcast(Intent(LOCAL_RECEIVER)
-                    .putExtra(LOCAL_RECEIVER_EXTRAS_COMMANDS, UPDATE_LIST_CLEAR))
+                            .putExtra(LOCAL_RECEIVER_EXTRAS_COMMANDS, UPDATE_LIST_CLEAR))
             val tab = activity.tabs.getTabAt(1)
             tab?.select()
         }
-
-
 
         add_button.setOnClickListener{
             var valid = true

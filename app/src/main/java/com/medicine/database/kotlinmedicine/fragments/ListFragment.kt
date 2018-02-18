@@ -4,17 +4,15 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.support.v4.app.Fragment
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v4.content.LocalBroadcastManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import com.medicine.database.kotlinmedicine.*
-import com.medicine.database.kotlinmedicine.activities.DetailsActivity
 import com.medicine.database.kotlinmedicine.activities.MainActivity
 import com.medicine.database.kotlinmedicine.models.Patient
 import kotlinx.android.synthetic.main.fragment_list.*
@@ -28,7 +26,8 @@ import org.jetbrains.anko.uiThread
 class ListFragment : Fragment() {
 
     companion object {
-        private var mPatientsList: List<Patient> = listOf()
+        lateinit var recyclerView: RecyclerView
+        var mPatientsList: MutableList<Patient> = mutableListOf()
         var adapter = RecyclerViewAdapter(mPatientsList)
     }
 
@@ -58,10 +57,11 @@ class ListFragment : Fragment() {
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
+        recyclerView = recycler_view
         LocalBroadcastManager.getInstance(activity)
                 .registerReceiver(broadCastReceiver, IntentFilter(LOCAL_RECEIVER))
-        recycler_view.layoutManager = LinearLayoutManager(activity)
-        recycler_view.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(activity)
+        recyclerView.adapter = adapter
         initList()
         super.onActivityCreated(savedInstanceState)
     }
@@ -71,6 +71,11 @@ class ListFragment : Fragment() {
         doAsync {
             mPatientsList = MainActivity.mMedicineDB.selectAllPatients()
             uiThread {
+                if (mPatientsList.isEmpty()) {
+                    empty_patient_view.visibility = View.VISIBLE
+                } else {
+                    empty_patient_view.visibility = View.GONE
+                }
                 adapter.updateList(mPatientsList)
             }
         }
