@@ -14,6 +14,7 @@ class MedicineParser {
     private val rowIllnessParser = classParser<Illness>()
 
     fun parseAllPatients(builder: SelectQueryBuilder): List<Patient> {
+
         return builder.parseList(rowPatientParser)
     }
 

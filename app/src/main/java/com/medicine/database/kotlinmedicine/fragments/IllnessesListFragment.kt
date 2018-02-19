@@ -6,7 +6,9 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.drawable.AnimatedVectorDrawable
 import android.os.Bundle
+import android.support.design.widget.BottomSheetBehavior
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentActivity
 import android.support.v4.content.LocalBroadcastManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -43,17 +45,30 @@ class IllnessesListFragment : Fragment() {
         fun newInstance(): IllnessesListFragment {
             return IllnessesListFragment()
         }
+
+        fun bottomFragmentHidden(activity: FragmentActivity) {
+            var plusToCross: AnimatedVectorDrawable = activity.resources.getDrawable(R.drawable.avd_plus_to_cross) as AnimatedVectorDrawable
+
+            activity.floatingActionButton.setImageDrawable(plusToCross)
+            plusToCross.start()
+
+            activity.floatingActionButton.setOnClickListener {
+                DetailsActivity.bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+                activity.supportFragmentManager.fragments.clear()
+                activity.supportFragmentManager.beginTransaction()
+                        .replace(R.id.details_container_add_illness, AddIllnessFragment.newInstance())
+                        .commit()
+            }
+        }
     }
 
     private val broadCastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
-            when (intent?.extras?.getString(LOCAL_RECEIVER_EXTRAS_COMMANDS_ILLNESSES)) {
-                UPDATE_LIST_ADD -> doAsync {
-                    Thread.sleep(500)
-                    uiThread {
-                        context?.toast("Запись успешно добавлена!")
-                        initList()
-                    }
+            doAsync {
+                Thread.sleep(500)
+                uiThread {
+                    context?.toast("Запись успешно создана!")
+                    initList()
                 }
             }
         }
@@ -65,17 +80,23 @@ class IllnessesListFragment : Fragment() {
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
-        activity.floatingActionButton.setOnClickListener {
-            activity.supportFragmentManager.beginTransaction()
-                    .replace(R.id.details_container, AddIllnessFragment.newInstance())
-                    .addToBackStack(activity.title as String?)
-                    .commit()
-        }
 
-        var plusToCross: AnimatedVectorDrawable = activity.resources.getDrawable(R.drawable.avd_plus_to_cross) as AnimatedVectorDrawable
+        DetailsActivity.bottomSheetBehavior.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                when (newState) {
+                    BottomSheetBehavior.STATE_SETTLING -> {
+                        bottomFragmentHidden(activity)
+                    }
+                }
+            }
 
-        activity.floatingActionButton.setImageDrawable(plusToCross)
-        plusToCross.start()
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                println("")
+            }
+
+        })
+
+        bottomFragmentHidden(activity)
 
         LocalBroadcastManager.getInstance(activity)
                 .registerReceiver(broadCastReceiver, IntentFilter(LOCAL_RECEIVER_ILLNESSES))
@@ -106,11 +127,11 @@ class IllnessesListFragment : Fragment() {
             IllnessesListFragment.mIllnessesList = MainActivity.mMedicineDB.selectAllIllnessForPatientId(DetailsActivity.patientID)
             uiThread {
                 if (mIllnessesList.isEmpty()) {
-                    empty_view.visibility = VISIBLE
+                    empty_view?.visibility = VISIBLE
                 } else {
-                    empty_view.visibility = GONE
+                    empty_view?.visibility = GONE
                 }
-                IllnessesListFragment.adapter.updateList(IllnessesListFragment.mIllnessesList as MutableList<Illness>)
+                IllnessesListFragment.adapter.updateList(IllnessesListFragment.mIllnessesList)
             }
         }
     }
@@ -126,7 +147,7 @@ class IllnessesListFragment : Fragment() {
             override fun onClick(v: View?) {
                 DetailsActivity.change = true
                 LocalBroadcastManager.getInstance(App.instance)
-                        .sendBroadcast(Intent(LOCAL_RECEIVER_CAHNGE_ILLNESS)
+                        .sendBroadcast(Intent(LOCAL_RECEIVER_CHANGE_ILLNESS)
                                 .putExtra(LOCAL_RECEIVER_EXTRAS_COMMANDS, mIllnessesList[itemId.toInt()]))
             }
 
@@ -146,7 +167,7 @@ class IllnessesListFragment : Fragment() {
         }
 
         override fun getItemCount(): Int {
-            return list?.size
+            return list.size
         }
 
         override fun getItemId(position: Int): Long {
@@ -154,7 +175,7 @@ class IllnessesListFragment : Fragment() {
         }
 
         override fun onBindViewHolder(holder: CardViewHolder?, position: Int) {
-            val illness = list?.get(position)
+            val illness = list.get(position)
             holder?.illnessName?.text = illness.illnessName
             holder?.date?.text = illness.illnessStartDate
         }

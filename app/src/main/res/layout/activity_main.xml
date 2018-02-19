@@ -8,20 +8,48 @@
     android:fitsSystemWindows="true"
     tools:context="com.medicine.database.kotlinmedicine.activities.MainActivity">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/appbar"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccentDark"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="-4dp"
+            android:background="@drawable/bottom_round_blue_rect"
+            android:elevation="7dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="2dp"
+                android:elevation="10dp"
+                android:text="Kotlin Medicine"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="24sp" />
+        </LinearLayout>
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="35dp"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="20dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_weight="1"
+            android:background="@drawable/bottom_biground_blue_rect"
+            android:elevation="6dp"
+            app:tabGravity="center"
             app:tabIndicatorColor="@color/cardview_light_background"
             app:tabSelectedTextColor="@color/cardview_light_background"
-            app:tabTextColor="@android:color/darker_gray">
+            app:tabTextColor="@android:color/darker_gray"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="8dp">
 
             <android.support.design.widget.TabItem
                 android:id="@+id/tabItem"
@@ -42,12 +70,15 @@
                 android:text="@string/tab_text_3" />
 
         </android.support.design.widget.TabLayout>
-    </android.support.design.widget.AppBarLayout>
+
+    </LinearLayout>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/container"
-        android:layout_width="match_parent"
+        android:layout_width="383dp"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        android:layout_marginTop="85dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:layout_editor_absoluteX="1dp" />
 
 </android.support.design.widget.CoordinatorLayout>

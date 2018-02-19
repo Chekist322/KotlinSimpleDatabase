@@ -1,5 +1,6 @@
 package com.medicine.database.kotlinmedicine.fragments
 
+import android.app.AlertDialog
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -9,6 +10,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.content.LocalBroadcastManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -62,6 +64,36 @@ class ListFragment : Fragment() {
                 .registerReceiver(broadCastReceiver, IntentFilter(LOCAL_RECEIVER))
         recyclerView.layoutManager = LinearLayoutManager(activity)
         recyclerView.adapter = adapter
+
+        val swipeHandler = object : SwipeToDeleteCallback(activity) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                AlertDialog.Builder(activity)
+                        .setMessage("Вы уверевны, что хотите УДАЛИТЬ запись о пациенте " +
+                                mPatientsList[viewHolder.itemId.toInt()].surname + " " +
+                                mPatientsList[viewHolder.itemId.toInt()].name.first() + "." +
+                                mPatientsList[viewHolder.itemId.toInt()].fathers_name.first() + "." +
+                                "?")
+                        .setPositiveButton("Да") { dialog, which ->
+                            doAsync {
+                                MainActivity.mMedicineDB.deletePatientByID(ListFragment.mPatientsList[viewHolder.adapterPosition].id)
+                                uiThread {
+                                    ListFragment.adapter.clearList()
+                                    recycler_view.swapAdapter(ListFragment.adapter, true)
+                                    initList()
+                                }
+                            }
+                        }
+                        .setNegativeButton("Нет") { dialog, which ->
+                            dialog.cancel()
+                            recycler_view.swapAdapter(ListFragment.adapter, true)
+                            initList()
+                        }
+                        .show()
+            }
+        }
+        val itemTouchHelper = ItemTouchHelper(swipeHandler)
+        itemTouchHelper.attachToRecyclerView(recycler_view)
+
         initList()
         super.onActivityCreated(savedInstanceState)
     }
@@ -70,11 +102,12 @@ class ListFragment : Fragment() {
     fun initList() {
         doAsync {
             mPatientsList = MainActivity.mMedicineDB.selectAllPatients()
+            println("")
             uiThread {
                 if (mPatientsList.isEmpty()) {
-                    empty_patient_view.visibility = View.VISIBLE
+                    empty_patient_view?.visibility = View.VISIBLE
                 } else {
-                    empty_patient_view.visibility = View.GONE
+                    empty_patient_view?.visibility = View.GONE
                 }
                 adapter.updateList(mPatientsList)
             }

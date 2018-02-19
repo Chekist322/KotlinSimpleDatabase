@@ -1,25 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingBottom="20dp">
 
         <TextView
-            android:focusable="true"
-            android:focusableInTouchMode="true"
             android:id="@+id/adding_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="29dp"
+            android:layout_marginTop="20dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:text="@string/new_patient"
+            android:textColor="@color/black"
             android:textSize="24sp" />
 
         <EditText
@@ -28,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/fathers_name_edit_text"
             android:layout_below="@+id/adding_title"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/edit_text"
             android:elevation="5dp"
             android:ems="10"
@@ -42,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/name_edit_text"
             android:layout_below="@+id/name_edit_text"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/edit_text"
             android:elevation="5dp"
             android:ems="10"
@@ -56,7 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/surname_edit_text"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/edit_text"
             android:elevation="5dp"
             android:ems="10"
@@ -70,7 +69,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/age_edit_text"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/round_red_button"
             android:elevation="5dp"
             android:padding="15dp"
@@ -84,7 +83,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/fathers_name_edit_text"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="26dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/edit_text"
             android:ems="10"
             android:hint="@string/age"

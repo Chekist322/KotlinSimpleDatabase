@@ -6,13 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.medicine.database.kotlinmedicine.R.id.recycler_view
 import com.medicine.database.kotlinmedicine.activities.DetailsActivity
 import com.medicine.database.kotlinmedicine.activities.MainActivity
-import com.medicine.database.kotlinmedicine.fragments.ListFragment
 import com.medicine.database.kotlinmedicine.models.Patient
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
 
 /**
  * Created by tosya on 18.02.18.
@@ -28,7 +24,7 @@ class RecyclerViewAdapter(private var list: MutableList<Patient>) : RecyclerView
 
         override fun onClick(v: View?) {
             val intent = Intent(v?.context, DetailsActivity::class.java)
-            intent.putExtra(PATIENT_ID, itemId+1)
+            intent.putExtra(PATIENT_ID, id)
             v?.context?.startActivity(intent)
         }
 
@@ -49,7 +45,7 @@ class RecyclerViewAdapter(private var list: MutableList<Patient>) : RecyclerView
     }
 
     override fun getItemCount(): Int {
-        return list?.size
+        return list.size
     }
 
     override fun getItemId(position: Int): Long {
@@ -57,17 +53,17 @@ class RecyclerViewAdapter(private var list: MutableList<Patient>) : RecyclerView
     }
 
     fun removeAt(position: Int) {
-        MainActivity.mMedicineDB.deleteIllnessByID(position.toLong())
+        MainActivity.mMedicineDB.deletePatientByID(position.toLong())
         list.removeAt(position)
         notifyItemRemoved(position)
     }
 
     override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
-        val patient = list?.get(position)
-        val fullName = patient?.surname + " " + patient?.name + " " + patient?.fathers_name
+        val patient = list.get(position)
+        val fullName = patient.surname + " " + patient.name + " " + patient.fathers_name
         holder?.name?.text = fullName
-        holder?.age?.text = patient?.age.toString()
-        holder?.id = position.toLong()
+        holder?.age?.text = patient.age.toString()
+        holder?.id = patient.id
     }
 
     fun updateList(aPatientList: MutableList<Patient>) {

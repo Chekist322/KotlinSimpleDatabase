@@ -8,7 +8,7 @@ var PATIENT_ID = "patient_id"
 
 var LOCAL_RECEIVER = "local_receiver"
 var LOCAL_RECEIVER_ILLNESSES = "local_receiver_illnesses"
-var LOCAL_RECEIVER_CAHNGE_ILLNESS = "local_receiver_change_illnesses"
+var LOCAL_RECEIVER_CHANGE_ILLNESS = "local_receiver_change_illnesses"
 
 
 var LOCAL_RECEIVER_EXTRAS_COMMANDS = "LOCAL_RECEIVER_EXTRAS_COMMANDS"

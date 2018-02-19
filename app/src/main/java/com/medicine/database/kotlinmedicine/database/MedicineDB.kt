@@ -1,7 +1,5 @@
 package com.medicine.database.kotlinmedicine.database
 
-import android.content.ContentValues
-import android.database.Cursor
 import com.medicine.database.kotlinmedicine.MedicineParser
 import com.medicine.database.kotlinmedicine.models.Illness
 import com.medicine.database.kotlinmedicine.models.Patient
@@ -96,6 +94,7 @@ class MedicineDB(private val patientsDB: DBHelper = DBHelper.instance()) {
     fun deletePatientByID(id: Long?) {
         patientsDB.use {
             delete(PatientTable.NAME, PatientTable._ID + " = " + id, null)
+            delete(IllnessTable.NAME, IllnessTable.PATIENT_ID + " = " + id, null)
         }
     }
 
