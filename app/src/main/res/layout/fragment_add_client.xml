@@ -3,93 +3,106 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingBottom="20dp">
+        android:layout_height="wrap_content"
+        android:baselineAligned="false"
+        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/adding_title"
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:text="@string/new_patient"
-            android:textColor="@color/black"
-            android:textSize="24sp" />
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/round_white_button"
+            android:elevation="4dp"
+            android:padding="20dp"
+            android:paddingBottom="20dp">
 
-        <EditText
-            android:id="@+id/name_edit_text"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/fathers_name_edit_text"
-            android:layout_below="@+id/adding_title"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/edit_text"
-            android:elevation="5dp"
-            android:ems="10"
-            android:hint="@string/name"
-            android:inputType="textCapWords|textPersonName"
-            android:textSize="24sp" />
+            <TextView
+                android:id="@+id/adding_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:text="@string/new_patient"
+                android:textColor="@color/black"
+                android:textSize="24sp" />
 
-        <EditText
-            android:id="@+id/surname_edit_text"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/name_edit_text"
-            android:layout_below="@+id/name_edit_text"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/edit_text"
-            android:elevation="5dp"
-            android:ems="10"
-            android:hint="@string/surname"
-            android:inputType="textCapWords|textPersonName"
-            android:textSize="24sp" />
+            <EditText
+                android:id="@+id/name_edit_text"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/fathers_name_edit_text"
+                android:layout_below="@+id/adding_title"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/edit_text"
+                android:elevation="5dp"
+                android:ems="10"
+                android:hint="@string/name"
+                android:inputType="textCapWords|textPersonName"
+                android:textSize="24sp" />
 
-        <EditText
-            android:id="@+id/fathers_name_edit_text"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/surname_edit_text"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/edit_text"
-            android:elevation="5dp"
-            android:ems="10"
-            android:hint="@string/fathers_name"
-            android:inputType="textCapWords|textPersonName"
-            android:textSize="24sp" />
+            <EditText
+                android:id="@+id/surname_edit_text"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/name_edit_text"
+                android:layout_below="@+id/name_edit_text"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/edit_text"
+                android:elevation="5dp"
+                android:ems="10"
+                android:hint="@string/surname"
+                android:inputType="textCapWords|textPersonName"
+                android:textSize="24sp" />
 
-        <Button
-            android:id="@+id/add_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/age_edit_text"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/round_red_button"
-            android:elevation="5dp"
-            android:padding="15dp"
-            android:text="@string/add"
-            android:textColor="@android:color/white"
-            android:textSize="18sp" />
+            <EditText
+                android:id="@+id/fathers_name_edit_text"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/surname_edit_text"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/edit_text"
+                android:elevation="5dp"
+                android:ems="10"
+                android:hint="@string/fathers_name"
+                android:inputType="textCapWords|textPersonName"
+                android:textSize="24sp" />
 
-        <EditText
-            android:id="@+id/age_edit_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/fathers_name_edit_text"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/edit_text"
-            android:ems="10"
-            android:hint="@string/age"
-            android:inputType="numberDecimal"
-            android:textAlignment="center" />
+            <Button
+                android:id="@+id/add_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/age_edit_text"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/round_red_button"
+                android:elevation="5dp"
+                android:padding="15dp"
+                android:text="@string/add"
+                android:textColor="@android:color/white"
+                android:textSize="18sp" />
 
+            <EditText
+                android:id="@+id/age_edit_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/fathers_name_edit_text"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/edit_text"
+                android:ems="10"
+                android:hint="@string/age"
+                android:inputType="numberDecimal"
+                android:textAlignment="center" />
+
+        </RelativeLayout>
     </RelativeLayout>
-
 </ScrollView>

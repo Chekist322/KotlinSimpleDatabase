@@ -88,6 +88,10 @@ class ListFragment : Fragment() {
                             recycler_view.swapAdapter(ListFragment.adapter, true)
                             initList()
                         }
+                        .setOnDismissListener {
+                            recycler_view.swapAdapter(ListFragment.adapter, true)
+                            initList()
+                        }
                         .show()
             }
         }
