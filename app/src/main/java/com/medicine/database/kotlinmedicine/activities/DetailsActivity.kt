@@ -38,6 +38,7 @@ class DetailsActivity : AppCompatActivity() {
         }
     }
 
+
     companion object {
         var patient: Patient? = null
         var patientID: Long? = null
@@ -46,9 +47,15 @@ class DetailsActivity : AppCompatActivity() {
         lateinit var illnessToChange: Illness
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition(R.anim.right_in, R.anim.right_out)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_details)
+        overridePendingTransition(R.anim.left_in, R.anim.left_out)
 
         bottomSheetBehavior = BottomSheetBehavior.from(bottom_sheet)
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
@@ -63,6 +70,7 @@ class DetailsActivity : AppCompatActivity() {
 
             home_back_arrow.setOnClickListener {
                 finish()
+                overridePendingTransition(R.anim.right_in, R.anim.right_out)
             }
 
 //            floatingActionButton.setOnClickListener {

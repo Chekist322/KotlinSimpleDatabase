@@ -47,12 +47,14 @@ class IllnessesListFragment : Fragment() {
         }
 
         fun bottomFragmentHidden(activity: FragmentActivity) {
+            DetailsActivity.bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
             var plusToCross: AnimatedVectorDrawable = activity.resources.getDrawable(R.drawable.avd_plus_to_cross) as AnimatedVectorDrawable
 
             activity.floatingActionButton.setImageDrawable(plusToCross)
             plusToCross.start()
 
             activity.floatingActionButton.setOnClickListener {
+                DetailsActivity.change = false
                 DetailsActivity.bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
                 activity.supportFragmentManager.fragments.clear()
                 activity.supportFragmentManager.beginTransaction()
